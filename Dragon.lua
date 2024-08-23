@@ -1,32 +1,18 @@
--- Script para listar todas as Game Passes do jogo
+-- Script para verificar se o jogador possui a Game Pass específica
 
-local function listGamePasses()
-    local gamePasses = {} -- Tabela para armazenar as informações das Game Passes
+local MarketplaceService = game:GetService("MarketplaceService")
+local Players = game:GetService("Players")
 
-    -- Função para adicionar informações de uma Game Pass à tabela
-    local function addGamePass(id, name)
-        table.insert(gamePasses, {Id = id, Name = name})
-    end
+local player = Players.LocalPlayer -- Obtém o jogador local
 
-    -- Recupera todas as Game Passes associadas ao jogo
-    local success, result = pcall(function()
-        return game:GetService("Players"):GetGamePasses()
-    end)
+-- ID da Game Pass que você deseja verificar
+local gamePassId = 781741534 -- Substitua pelo ID real da Game Pass
 
-    if success then
-        for _, gamePass in ipairs(result) do
-            addGamePass(gamePass.Id, gamePass.Name)
-        end
-
-        -- Imprime as Game Passes no console
-        print("Game Passes no jogo:")
-        for _, pass in ipairs(gamePasses) do
-            print("ID: " .. pass.Id .. ", Nome: " .. pass.Name)
-        end
-    else
-        warn("Não foi possível obter as Game Passes. Erro: " .. result)
-    end
+-- Função para verificar a posse da Game Pass
+local function checkGamePass()
+    local hasGamePass = player:HasGamePass(gamePassId)
+    print("Game Pass ID: " .. gamePassId .. " | Possui: " .. tostring(hasGamePass))
 end
 
--- Chama a função para listar as Game Passes
-listGamePasses()
+-- Chama a função para verificar a Game Pass
+checkGamePass()
